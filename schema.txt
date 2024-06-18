@@ -1,0 +1,88 @@
+1. Users:
+
+  {
+    _id: ObjectID,
+    name: "",
+    email: "",
+    username: "",
+    password: "",
+    mobile: "",
+    dob: "",
+    gender: "",
+    years_of_experience: 0,
+  },
+
+2. Code Kata:
+
+  {
+    _id: ObjectID,
+    user_id: ObjectID,
+    problems_solved: [
+      {
+        problem: String,
+        solution: String,
+      },
+    ],
+  },
+
+3. Attendance:
+
+  {
+    _id: ObjectID,
+    user_id: ObjectID,
+    date: Date,
+    status: String, // "present" or "absent"
+  },
+
+4. Topics:
+
+  {
+    _id: ObjectID,
+    title: String,
+    description: String,
+    date: Date,
+  },
+
+5. Tasks:
+
+  {
+    _id: ObjectID,
+    title: String,
+    description: String,
+    date: Date,
+    submissions: [
+      {
+        user_id: ObjectID,
+        status: String, // "submitted" or "not submitted"
+      },
+    ],
+    topic: ObjectId,
+  },
+
+6. Company Drives:
+
+  {
+    _id: ObjectID,
+    company_name: String,
+    date: Date,
+    attendees: {
+      id: ObjectID,
+      status: String, //"selected" or "rejected"
+    },
+  },
+
+7. Mentors:
+
+  {
+    _id: "",
+    name: "",
+    experience: 0,
+    email: "",
+    username: "",
+    password: "",
+    mobile: "",
+    dob: "",
+    gender: "",
+    mentees: [], // List of User IDs as Foreign Key
+  },
+

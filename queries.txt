@@ -1,0 +1,113 @@
+1. db.tasks.aggregate([
+  {
+    $match: {
+      date: {
+        $gte: "2020-10-01",
+        $lt: "2024-11-01"
+      }
+    }
+  }
+]);
+
+2.db.company_drives.aggregate([
+  {
+    $match: {
+      date: {
+        $gte: "2020-10-15",
+        $lt: "2020-10-31"
+      }
+    }
+  }
+]);
+
+3. db.company_drives.aggregate([
+  {
+    $unwind: "$attendees"
+  },
+  {
+    $lookup: {
+      from: "users",
+      localField: "attendees.id",
+      foreignField: "_id",
+      as: "studentDetails"
+    }
+  },
+  {
+    $unwind: "$studentDetails"
+  },
+  {
+    $group: {
+      _id: "$_id",
+      company_name: { $first: "$company_name" },
+      date: { $first: "$date" },
+      attendees: {
+        $push: {
+          id: "$attendees.id",
+          status: "$attendees.status",
+          studentDetails: "$studentDetails"
+        }
+      }
+    }
+  }
+]);
+
+4. db.code_kata.aggregate([
+    {
+        $match:{
+            "user_id": ObjectId("66715716582c0c7790fa280e")
+        }
+        
+    },
+    {
+    $project: {
+      user_id: 1,
+      problemsSolved: { $size: "$problems_solved" }
+    }
+  }
+]);
+
+5. db.mentors.aggregate([
+  {
+    $project: {
+      name: 1,
+      menteeCount: { $size: "$mentees" }
+    }
+  },
+  {
+    $match: {
+      menteeCount: { $gt: 15 }
+    }
+  }
+]);
+
+6. db.attendance.aggregate([{
+    $match:{
+        "status":{
+            $eq:"absent",
+        },
+        "date":{
+            $gte:"2020-10-15",
+            $lt:"2020-10-31"
+        }
+    }
+},
+{
+    $count:"totalUsers"
+}
+]);
+
+db.tasks.aggregate([{
+    $match:{
+        "submissions.status":{
+            $eq:"not submitted",
+        },
+        "date":{
+            $gte:"2020-10-15",
+            $lt:"2020-10-31"
+        }
+    }
+},
+{
+    $count:"totalUsers"
+}
+]);
